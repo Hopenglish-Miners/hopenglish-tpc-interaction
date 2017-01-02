@@ -1,12 +1,9 @@
 # Generate Users Profile File
-
+import json
+import pandas
 # This method return a mapping of video(key)
 # and and array of scores(value)
 class Helper:
-    def __init__(self,users_videos,clusterData):
-        self.user_videos = users_videos
-        self.clusterData = clusterData
-
     def parse_video_scores(self,scores_object):
         result = {}
         for score in scores_object:
@@ -62,10 +59,10 @@ class Helper:
             return round(sumScores*1.0/(len(scores)*1.0-countSkipped*1.0),2)
 
     def calc_user_interaction(self):
-        video_to_cluster = parse_csv_file(self.clusterData)
-        cardinality = get_cluster_cardinality(video_to_cluster)
-        video_sequence = self.in_video_sequence
-        users_scores = self.in_scores_sequence
+        video_to_cluster = self.parse_csv_file(self.clusterData)
+        cardinality = self.get_cluster_cardinality(video_to_cluster)
+        video_sequence = self.in_user_videos
+        users_scores = self.in_user_scores
         clusterSequence = []
         for video in video_sequence:
             # ClusterSequece
@@ -77,9 +74,9 @@ class Helper:
         for c_index in range(len(clusterSequence)):
             cluster = clusterSequence[c_index]
             if cluster in scores_by_cluster:
-                scores_by_cluster[cluster] += users_scores[c_index]
+                scores_by_cluster[cluster] += self.calc_avg_score(users_scores[video_sequence[c_index]])
             else:
-                scores_by_cluster[cluster] = users_scores[c_index]
+                scores_by_cluster[cluster] = self.calc_avg_score(users_scores[video_sequence[c_index]])
         # Add cluster with no interaction
         for cluster in cardinality:
             if cluster not in scores_by_cluster:
@@ -163,3 +160,15 @@ class Helper:
 
             usersProfilesJsonWithIndexes[memberId]["interaction"] = scores_by_cluster
             return scores_by_cluster
+
+    def __init__(self,users_videos,clusterData):
+        self.in_user_scores = self.parse_video_scores(users_videos["listenScore"])
+        self.in_user_videos = users_videos["chosenVideo"]
+        self.clusterData = clusterData
+
+with open("data/studentBehaviorExample.json") as data_file:
+    user_videos = json.load(data_file)
+csv_file = pandas.read_csv("data/clustersByWordLevel.csv",header=None)
+helper = Helper(user_videos,csv_file)
+interaction = helper.calc_user_interaction()
+print(interaction)

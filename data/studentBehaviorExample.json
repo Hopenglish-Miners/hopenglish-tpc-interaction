@@ -1,0 +1,98 @@
+{
+  "chosenVideo": [
+    3913,
+    5186,
+    4165,
+    4802,
+    5433,
+    5793
+  ],
+  "vocabularyList": [],
+  "memberId": "50644",
+  "listenScore": [
+    {
+      "postId": 3913,
+      "score": 96
+    },
+    {
+      "postId": 3913,
+      "score": 94
+    },
+    {
+      "postId": 3913,
+      "score": 96
+    },
+    {
+      "postId": 3913,
+      "score": 98
+    },
+    {
+      "postId": 3913,
+      "score": 93
+    },
+    {
+      "postId": 5186,
+      "score": 94
+    },
+    {
+      "postId": 5186,
+      "score": 98
+    },
+    {
+      "postId": 5186,
+      "score": 100
+    },
+    {
+      "postId": 4165,
+      "score": 91
+    },
+    {
+      "postId": 4802,
+      "score": 99
+    },
+    {
+      "postId": 4802,
+      "score": 92
+    },
+    {
+      "postId": 4802,
+      "score": 95
+    },
+    {
+      "postId": 4802,
+      "score": 99
+    },
+    {
+      "postId": 4802,
+      "score": 99
+    },
+    {
+      "postId": 4802,
+      "score": 83
+    },
+    {
+      "postId": 5433,
+      "score": -1
+    },
+    {
+      "postId": 5433,
+      "score": -1
+    },
+    {
+      "postId": 5433,
+      "score": -1
+    },
+    {
+      "postId": 5793,
+      "score": -1
+    },
+    {
+      "postId": 5793,
+      "score": -1
+    },
+    {
+      "postId": 5793,
+      "score": -1
+    }
+  ]
+}
