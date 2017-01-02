@@ -31,7 +31,7 @@ def getTPVideos():
     print(interaction)
 
     # Get tp cluster
-    #tp_cluster = requests.post('http://openglish-tpc-classifier/processJson', data = interaction)
+    #tp_cluster = requests.post('http://hopenglish-tpc-classifier/processJson', data = interaction)
     tp_cluster = 0
 
     # Get videos in that cluster
