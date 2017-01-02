@@ -161,10 +161,23 @@ class Helper:
             usersProfilesJsonWithIndexes[memberId]["interaction"] = scores_by_cluster
             return scores_by_cluster
 
+    def parse_cluster_videos(self,clusterData):
+        result = {}
+        for index in range(1,len(csv_file[0])):
+            cluster_number = int(csv_file[1][index])
+            if cluster_number not in result:
+                result[cluster_number] = []
+            result[cluster_number].append(csv_file[0][index])
+        return result
+
+    def get_videos_in_cluster(self,cluster):
+        return self.cluster_videos[cluster]
+        
     def __init__(self,users_videos,clusterData):
         self.in_user_scores = self.parse_video_scores(users_videos["listenScore"])
         self.in_user_videos = users_videos["chosenVideo"]
         self.clusterData = clusterData
+        self.cluster_videos = self.parse_cluster_videos(clusterData)
 
 with open("data/studentBehaviorExample.json") as data_file:
     user_videos = json.load(data_file)

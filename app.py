@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from helper import Helper
 import pandas
+import requests
 app = Flask(__name__)
 
 @app.route('/')
@@ -29,7 +30,15 @@ def getTPVideos():
     interaction = helper.calc_user_interaction()
     print(interaction)
 
-    result = { "cluster": 0 , "videos": [1231,34235,12335,5345345,123123]}
+    # Get tp cluster
+    #tp_cluster = requests.post('http://httpbin.org/post', data = interaction)
+    tp_cluster = 0
+
+    # Get videos in that cluster
+    videos = helper.get_videos_in_cluster(0)
+
+    # Creating result format
+    result = { "cluster": tp_cluster , "videos": videos}
     # Get cluster of TP
     return jsonify(result)
 
