@@ -1,9 +1,22 @@
 # Generate Users Profile File
 import json
 import pandas
+import requests
+import json
 # This method return a mapping of video(key)
 # and and array of scores(value)
 class Helper:
+    def __init__(self,users_videos,clusterData):
+        # print("init")
+        self.in_user_scores = self.parse_video_scores(users_videos["listenScore"])
+        # print("passed")
+        self.in_user_videos = users_videos["chosenVideo"]
+        # print("passed")
+        self.clusterData = clusterData
+        # print("passed")
+        self.cluster_videos = self.parse_cluster_videos(clusterData)
+        # print("finish init")
+
     def parse_video_scores(self,scores_object):
         result = {}
         for score in scores_object:
@@ -61,6 +74,8 @@ class Helper:
     def calc_user_interaction(self):
         video_to_cluster = self.parse_csv_file(self.clusterData)
         cardinality = self.get_cluster_cardinality(video_to_cluster)
+        print("Cardinality")
+        print(cardinality)
         video_sequence = self.in_user_videos
         users_scores = self.in_user_scores
         clusterSequence = []
@@ -163,25 +178,25 @@ class Helper:
 
     def parse_cluster_videos(self,clusterData):
         result = {}
-        for index in range(1,len(csv_file[0])):
-            cluster_number = int(csv_file[1][index])
+        for index in range(1,len(clusterData[0])):
+            cluster_number = int(clusterData[1][index])
             if cluster_number not in result:
                 result[cluster_number] = []
-            result[cluster_number].append(csv_file[0][index])
+            result[cluster_number].append(clusterData[0][index])
         return result
 
     def get_videos_in_cluster(self,cluster):
         return self.cluster_videos[cluster]
-        
-    def __init__(self,users_videos,clusterData):
-        self.in_user_scores = self.parse_video_scores(users_videos["listenScore"])
-        self.in_user_videos = users_videos["chosenVideo"]
-        self.clusterData = clusterData
-        self.cluster_videos = self.parse_cluster_videos(clusterData)
 
-with open("data/studentBehaviorExample.json") as data_file:
-    user_videos = json.load(data_file)
-csv_file = pandas.read_csv("data/clustersByWordLevel.csv",header=None)
-helper = Helper(user_videos,csv_file)
-interaction = helper.calc_user_interaction()
-print(interaction)
+# with open("data/studentBehaviorExample.json") as data_file:
+#     user_videos = json.load(data_file)
+# csv_file = pandas.read_csv("data/clustersByWordLevel.csv",header=None)
+# helper = Helper(user_videos,csv_file)
+# interaction = helper.calc_user_interaction()
+# print(interaction)
+# print("Format for interaction")
+# print(interaction)
+# data_json = json.dumps(interaction)
+# headers = {'Content-type': 'application/json'}
+# response = requests.post("https://hopenglish-tpc-classifier.herokuapp.com/processJson", data=data_json, headers=headers)
+# print(response.text.replace("C",""))
